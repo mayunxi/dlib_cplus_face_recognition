@@ -1,0 +1,29 @@
+#######################
+# Makefile
+#######################
+
+# compile and lib parameter
+CC      := g++ -std=c++11
+TARGET	:= libstfz_facedetect.so
+#############################################################
+#############################################################
+LIBS    := -L/usr/local/lib -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_objdetect -lopenblas_sandybridgep-r0.2.19  
+LIBS	+= -L/usr/lib -ljpeg -lX11
+LIBS	+= -L/lib/x86_64-linux-gnu -lpng12
+LDFLAGS :=
+DEFINES :=
+INCLUDE := -I.
+CFLAGS  := 
+CXXFLAGS:= 
+
+#link
+$(TARGET):stfz_facedetect.o
+	$(CC) $< -shared -fPIC -o $@
+#compile
+stfz_facedetect.o:stfz_facedetect.cpp /usr/local/lib/libdlib.a
+	$(CC) -c -fPIC $^ -o $@ $(LIBS)
+
+# clean
+clean:
+	rm -fr *.o
+	rm -fr $(TARGET)
